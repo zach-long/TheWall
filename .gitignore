@@ -102,3 +102,14 @@ dist
 
 # TernJS port file
 .tern-port
+
+# package-lcok
+package-lock.json
+
+# un-transpiled files
+app/*.js
+public/css/*.css
+public/js/*.js
+
+# config files
+site.config.js

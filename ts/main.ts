@@ -9,6 +9,14 @@
         content: string
     }
 
+    interface MessageResponse extends Response {
+        message: MessageObject
+        success: string
+    }
+
+    // @ts-ignore
+    const socket = io();
+
     const wall: HTMLElement = document.getElementById('wall')!;
     const messageForm: HTMLFormElement = document.forms[0];
     const submitButton: HTMLInputElement = document.getElementById('postMessage')! as HTMLInputElement;
@@ -25,20 +33,36 @@
         return response.json();
     }
 
+    function formatMessage(content: string) {
+        console.log(`Formatting message: ${content}`);
+        let formattedContent = content.replace(/(\n)/gm, '<br />');
+        // let formattedContent = content.replace('\n', '<br />');
+        console.log(`Formatted message: ${formattedContent}`);
+
+        return formattedContent;
+    }
+
     function createMessage(message: MessageObject) {
+        console.log(`Creating message: ${message}`);
         let div: HTMLDivElement = document.createElement('div');
+
         div.id = message._id;
-        div.innerHTML = message.content;
+
+        let content = formatMessage(message.content);
+        div.innerHTML = `${content}`;
+
         div.classList.add('message');
+        
+        console.log(`Created message: ${div.innerHTML}`);
         wall.prepend(div);
     }
 
     function getMessages() {
         asyncReq('/api/all', 'get').then((result: Array<MessageObject>) => {
-            console.log(result);
             var allMessages: Array<MessageObject> = result;
             
             allMessages.forEach((message: MessageObject) => {
+                console.log(message);
                 createMessage(message);
             });
         });
@@ -49,8 +73,9 @@
 
         const data: FormJSON = {messageContent: messageContent.value};
 
-        asyncReq('/api/new', 'post', data).then((result: Response) => {
-            console.log(result);
+        asyncReq('/api/new', 'post', data).then((result: MessageResponse) => {
+            socket.emit('new message', result.message);
+
             messageForm.reset();
         });
     }
@@ -59,6 +84,10 @@
         e.preventDefault();
         postMessage()
     });
+
+    socket.on('receive message', (message: MessageObject) => {
+        createMessage(message);
+    })
 
     getMessages();
 

@@ -2,15 +2,15 @@ import express from 'express';
 import path from 'path';
 import bodyParser from 'body-parser';
 import helmet from 'helmet';
-import mongoose from 'mongoose';
+import mongoose from 'mongoose'
+import { Socket } from 'socket.io';
 
 const { port, dbPath } = require('./../site.config.js');
 // import { port, dbPath } from './../site.config.js';
 
 const app: express.Application = express();
-
-const routes = require('./routes.js');
-// import * as routes from './routes.js';
+const http = require('http').createServer(app);
+const io = require('socket.io')(http);
 
 mongoose.connect(dbPath);
 const db = mongoose.connection;
@@ -36,8 +36,24 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 app.use(express.static(path.join(__dirname, './../public')));
 
+const routes = require('./routes.js');
+// import * as routes from './routes.js';
 app.use('/api', routes);
 
-app.listen(port, () => {
+io.on('connection', (socket: Socket) => {
+    console.log(`user connected`);
+
+    socket.on('new message', (message: {_id: string, content: string}) => {
+        console.log(`user posted message: '${message.content}'`);
+
+        io.emit('receive message', message);
+    })
+
+    socket.on('disconnect', () => {
+        console.log(`user disconnected`);
+    })
+});
+
+http.listen(port, () => {
     console.log(`Application started on port ${port}.`)
 });
