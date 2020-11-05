@@ -1,0 +1,54 @@
+@import 'components/_variables';
+@import 'components/_mixins';
+
+$width: 75rem;
+$input-border-color: lightgray;
+$input-border-color-focus: black;
+$input-border-transition-speed: 300ms;
+$submit-color-hover: cyan;
+$submit-color-transition-speed: 300ms;
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+#post {
+    width: $width;
+}
+
+#wall {
+    width: $width;
+
+    .message {
+        padding: 1em 0;
+    }
+}
+
+#messageContent {
+    width: $width;
+    resize: none;
+    border-width: 2px;
+    border-style: solid;
+    border-color: $input-border-color;
+
+    transition: border-color $input-border-transition-speed;
+
+    &:focus {
+        border-color: $input-border-color-focus;
+    }
+}
+
+#postMessage {
+    display: block;
+    margin: auto;
+    border: none;
+
+    transition: background-color $submit-color-transition-speed;
+
+    &:hover {
+        background-color: $submit-color-hover;
+    }
+}
