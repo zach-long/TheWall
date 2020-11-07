@@ -45,15 +45,18 @@
     function createMessage(message: MessageObject) {
         console.log(`Creating message: ${message}`);
         let div: HTMLDivElement = document.createElement('div');
+        let p: HTMLParagraphElement = document.createElement('p');
 
         div.id = message._id;
 
         let content = formatMessage(message.content);
-        div.innerHTML = `${content}`;
+        p.innerHTML = `${content}`;
 
         div.classList.add('message');
         
         console.log(`Created message: ${div.innerHTML}`);
+
+        div.appendChild(p);
         wall.prepend(div);
     }
 
