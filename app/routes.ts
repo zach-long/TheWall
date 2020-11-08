@@ -10,11 +10,6 @@ interface MessageObject {
     content: String
 }
 
-router.get('/',
-(req: Request, res: Response, next: NextFunction) => {
-    res.render('index');
-});
-
 router.get('/all',
 (req: Request, res: Response, next: NextFunction) => {
     console.log(`* retrieving all Messages`);
@@ -30,7 +25,19 @@ router.get('/all',
 
 router.post('/new',
 [
-    body('messageContent').trim().escape()
+    body('messageContent').trim().escape(),
+    body('messageContent').exists().notEmpty().withMessage(`You cannot post an empty message.`),
+    body('messageContent').isLength({max: 113213}).withMessage(`Your message is too long.`),
+    body('messageContent').custom((value) => {
+        let emailRegex = /(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})/gm;
+        let containsEmail = emailRegex.test(value);
+        return !containsEmail;
+    }).withMessage(`Your message cannot contain an email address.`),
+    body('messageContent').custom((value) => {
+        let urlRegex = /((https?):\/\/)?([w|W]{3}\.)*[a-zA-Z0-9\-\.]{3,}\.[a-zA-Z]{2,}(\.[a-zA-Z]{2,})?/gm;
+        let containsURL = urlRegex.test(value);
+        return !containsURL;
+    }).withMessage(`Your message cannot contain a URL.`)
 ],
 (req: Request, res: Response, next: NextFunction) => {
     const errors: Result<ValidationError> = validationResult(req);

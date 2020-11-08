@@ -11,7 +11,8 @@
 
     interface MessageResponse extends Response {
         message: MessageObject
-        success: string
+        success: string,
+        errors?: Array<{location: string, msg: string, param: string, value: string}>
     }
 
     // @ts-ignore
@@ -76,10 +77,25 @@
 
         const data: FormJSON = {messageContent: messageContent.value};
 
-        asyncReq('/api/new', 'post', data).then((result: MessageResponse) => {
-            socket.emit('new message', result.message);
+        asyncReq('/api/new', 'post', data)
+        .then((result: MessageResponse) => {
+            console.log(`POST success`);
 
-            messageForm.reset();
+            if (!result.errors) {
+                console.log(`No errors triggered`);
+                socket.emit('new message', result.message);
+
+                messageForm.reset();
+            } else {
+                console.log(`Errors found`);
+                console.log(result.errors);
+                alert(result.errors[0].msg);
+            }
+            
+        })
+        .catch((error: Error) => {
+            console.log(`POST error`);
+            console.log(error);
         });
     }
 

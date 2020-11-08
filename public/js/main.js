@@ -89,9 +89,23 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     function postMessage() {
         var messageContent = document.getElementById('messageContent');
         var data = { messageContent: messageContent.value };
-        asyncReq('/api/new', 'post', data).then(function (result) {
-            socket.emit('new message', result.message);
-            messageForm.reset();
+        asyncReq('/api/new', 'post', data)
+            .then(function (result) {
+            console.log("POST success");
+            if (!result.errors) {
+                console.log("No errors triggered");
+                socket.emit('new message', result.message);
+                messageForm.reset();
+            }
+            else {
+                console.log("Errors found");
+                console.log(result.errors);
+                alert(result.errors[0].msg);
+            }
+        })
+            .catch(function (error) {
+            console.log("POST error");
+            console.log(error);
         });
     }
     submitButton.addEventListener('click', function (e) {

@@ -7,9 +7,6 @@ var express_1 = __importDefault(require("express"));
 var express_validator_1 = require("express-validator");
 var router = express_1.default.Router();
 var Message = require('./message.js');
-router.get('/', function (req, res, next) {
-    res.render('index');
-});
 router.get('/all', function (req, res, next) {
     console.log("* retrieving all Messages");
     Message.find(function (error, result) {
@@ -20,7 +17,19 @@ router.get('/all', function (req, res, next) {
     });
 });
 router.post('/new', [
-    express_validator_1.body('messageContent').trim().escape()
+    express_validator_1.body('messageContent').trim().escape(),
+    express_validator_1.body('messageContent').exists().notEmpty().withMessage("You cannot post an empty message."),
+    express_validator_1.body('messageContent').isLength({ max: 113213 }).withMessage("Your message is too long."),
+    express_validator_1.body('messageContent').custom(function (value) {
+        var emailRegex = /(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})/gm;
+        var containsEmail = emailRegex.test(value);
+        return !containsEmail;
+    }).withMessage("Your message cannot contain an email address."),
+    express_validator_1.body('messageContent').custom(function (value) {
+        var urlRegex = /((https?):\/\/)?([w|W]{3}\.)*[a-zA-Z0-9\-\.]{3,}\.[a-zA-Z]{2,}(\.[a-zA-Z]{2,})?/gm;
+        var containsURL = urlRegex.test(value);
+        return !containsURL;
+    }).withMessage("Your message cannot contain a URL.")
 ], function (req, res, next) {
     var errors = express_validator_1.validationResult(req);
     if (!errors.isEmpty()) {

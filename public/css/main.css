@@ -46,7 +46,7 @@
   font-size: 14px;
   transition: background-color 300ms; }
   #postMessage:hover {
-    background-color: cyan; }
+    background-color: lightblue; }
 
 #wall {
   width: 100%; }
