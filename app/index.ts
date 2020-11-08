@@ -6,7 +6,6 @@ import mongoose from 'mongoose'
 import { Socket } from 'socket.io';
 
 const { port, dbPath } = require('./../site.config.js');
-// import { port, dbPath } from './../site.config.js';
 
 const app: express.Application = express();
 const http = require('http').createServer(app);
@@ -47,11 +46,11 @@ io.on('connection', (socket: Socket) => {
         console.log(`user posted message: '${message.content}'`);
 
         io.emit('receive message', message);
-    })
+    });
 
     socket.on('disconnect', () => {
         console.log(`user disconnected`);
-    })
+    });
 });
 
 http.listen(port, () => {

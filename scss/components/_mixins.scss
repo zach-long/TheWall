@@ -1,0 +1,29 @@
+@import '_variables';
+
+@mixin breakpoint-phone {
+    @media (max-width: $breakpoint-phone) { @content; }
+}
+
+@mixin breakpoint-tablet-portrait {
+    @media (min-width: $breakpoint-tablet-portrait) { @content; }
+}
+
+@mixin vw-em-break {
+    @media (min-width: $vw-em-break) { @content; }
+}
+
+@mixin breakpoint-tablet-landscape {
+    @media (min-width: $breakpoint-tablet-landscape) { @content; }
+}
+
+@mixin breakpoint-large-portrait { // ex. iPad pro in portrait mode, width of a small laptop but more more view height
+    @media (min-width: $breakpoint-tablet-landscape) and (orientation: portrait) { @content; }
+}
+
+@mixin breakpoint-desktop {
+    @media (min-width: $breakpoint-desktop) { @content; }
+}
+
+@mixin breakpoint-desktop-large {
+    @media (min-width: $breakpoint-desktop-large) { @content; }
+}

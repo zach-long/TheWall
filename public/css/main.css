@@ -1,0 +1,60 @@
+@font-face {
+  font-family: "Jost";
+  src: url("/fonts/Jost-Regular.ttf") format("truetype"), url("/fonts/Jost-Italic.ttf") format("truetype"), url("/fonts/Jost-Bold.ttf") format("truetype"), url("/fonts/Jost-BoldItalic.ttf") format("truetype"); }
+
+@font-face {
+  font-family: "Poppins";
+  src: url("/fonts/Poppins-Regular.ttf") format("truetype"); }
+
+#content {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: unset;
+  margin: auto; }
+  @media (min-width: 900px) {
+    #content {
+      width: 900px; } }
+
+#post {
+  width: 100%;
+  margin: 1em 0 2em 0; }
+
+#messageContent {
+  width: 100%;
+  resize: none;
+  box-sizing: border-box;
+  border-width: 2px;
+  border-style: solid;
+  border-color: lightgray;
+  border-radius: 2px;
+  font-family: "Jost", sans-serif;
+  font-size: 14px;
+  transition: border-color 300ms; }
+  #messageContent:focus {
+    border-color: black; }
+
+#postMessage {
+  width: 100%;
+  display: block;
+  margin: auto;
+  padding: 0.25em;
+  border: none;
+  border-radius: 2px;
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  transition: background-color 300ms; }
+  #postMessage:hover {
+    background-color: cyan; }
+
+#wall {
+  width: 100%; }
+  #wall .message {
+    padding: 1em 0; }
+    #wall .message p {
+      margin: 0;
+      padding: 0 .5em;
+      border-left: 2px solid gray;
+      font-family: "Jost", sans-serif;
+      font-size: 24px; }

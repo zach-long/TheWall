@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node app/index.js",
     "test-server": "pm2 start ecosystem.config.js",
     "prod-server": "pm2 start ecosystem.config.js --env production",
     "ts-build-express": "tsc -p app",

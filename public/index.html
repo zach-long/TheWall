@@ -17,13 +17,21 @@
         <title>1. General</title>
     </head>
     <body>
-        <section id="post">
-            <form id="messageForm" name="messageForm">
-                <textarea id="messageContent" form="messageForm" name="messageContent"></textarea>
-                <input id="postMessage" type="submit" value="Post" />
-            </form>
-        </section>
-        <main id="wall"></main>
+        <main id="content">
+            <section id="post">
+                <form id="messageForm" name="messageForm">
+                    <textarea id="messageContent" form="messageForm" name="messageContent"></textarea>
+                    <input id="postMessage" type="submit" value="Post" />
+                </form>
+            </section>
+            <section id="wall">
+                <!--
+                <div id="the message ID" class="message">
+                    <p>The message content</p>
+                </div>
+                -->
+            </section>
+        </main>
         <script src="/socket.io/socket.io.js"></script>
         <script src="/js/main.js"></script>
     </body>

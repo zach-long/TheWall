@@ -107,9 +107,9 @@ dist
 package-lock.json
 
 # un-transpiled files
-app/*.js
-public/css/*.css
-public/js/*.js
+# app/*.js
+# public/css/*.css
+# public/js/*.js
 
 # config files
 site.config.js

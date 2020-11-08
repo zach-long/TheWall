@@ -1,44 +1,47 @@
 @import 'components/_variables';
 @import 'components/_mixins';
 
-$width: 75rem;
-$input-border-color: lightgray;
-$input-border-color-focus: black;
-$input-border-transition-speed: 300ms;
-$submit-color-hover: cyan;
-$submit-color-transition-speed: 300ms;
+@font-face {
+    font-family: "Jost";
+    src: url("/fonts/Jost-Regular.ttf") format("truetype"),
+         url("/fonts/Jost-Italic.ttf") format("truetype"),
+         url("/fonts/Jost-Bold.ttf") format("truetype"),
+         url("/fonts/Jost-BoldItalic.ttf") format("truetype");
+}
 
-body {
+@font-face {
+    font-family: "Poppins";
+    src: url("/fonts/Poppins-Regular.ttf") format("truetype");
+}
+
+#content {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-}
+    width: unset;
+    margin: auto;
 
-#post {
-    width: $width;
-}
-
-#wall {
-    width: $width;
-
-    .message {
-        padding: 1em 0;
-
-        p {
-            margin: 0;
-            padding: 0 .5em;
-            border-left: 2px solid gray;
-        }
+    @include breakpoint-tablet-landscape {
+        width: $breakpoint-tablet-landscape;
     }
 }
 
+#post {
+    width: 100%;
+    margin: 1em 0 2em 0;
+}
+
 #messageContent {
-    width: $width;
+    width: 100%;
     resize: none;
+    box-sizing: border-box;
     border-width: 2px;
     border-style: solid;
     border-color: $input-border-color;
+    border-radius: $input-border-radius;
+    font-family: $font-input-family;
+    font-size: $font-input-size;
 
     transition: border-color $input-border-transition-speed;
 
@@ -48,13 +51,34 @@ body {
 }
 
 #postMessage {
+    width: 100%;
     display: block;
     margin: auto;
+    padding: $input-padding;
     border: none;
+    border-radius: $input-border-radius;
+    font-family: $font-button-family;
+    font-size: $font-button-size;
 
     transition: background-color $submit-color-transition-speed;
 
     &:hover {
         background-color: $submit-color-hover;
+    }
+}
+
+#wall {
+    width: 100%;
+
+    .message {
+        padding: 1em 0;
+
+        p {
+            margin: 0;
+            padding: 0 .5em;
+            border-left: 2px solid gray;
+            font-family: $font-wall-family;
+            font-size: $font-wall-size;
+        }
     }
 }
