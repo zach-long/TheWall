@@ -5,7 +5,8 @@ import helmet from 'helmet';
 import mongoose from 'mongoose'
 import { Socket } from 'socket.io';
 
-const { port, dbPath } = require('./../site.config.js');
+const port = process.env.PORT || '3000';
+const dbPath = process.env.MONGODB_URI || 'mongodb://localhost/thewall'
 
 const app: express.Application = express();
 const http = require('http').createServer(app);
