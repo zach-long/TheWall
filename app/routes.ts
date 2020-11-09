@@ -25,14 +25,19 @@ router.get('/all',
 
 router.post('/new',
 [
+    // sanitize post
     body('messageContent').trim().escape(),
+    // check that message is not blank
     body('messageContent').exists().notEmpty().withMessage(`You cannot post an empty message.`),
+    // check that message is not too large
     body('messageContent').isLength({max: 113213}).withMessage(`Your message is too long.`),
+    // check that message does not contain an email address
     body('messageContent').custom((value) => {
         let emailRegex = /(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})/gm;
         let containsEmail = emailRegex.test(value);
         return !containsEmail;
     }).withMessage(`Your message cannot contain an email address.`),
+    // check that message does not contain a url or link
     body('messageContent').custom((value) => {
         let urlRegex = /((https?):\/\/)?([w|W]{3}\.)*[a-zA-Z0-9\-\.]{3,}\.[a-zA-Z]{2,}(\.[a-zA-Z]{2,})?/gm;
         let containsURL = urlRegex.test(value);

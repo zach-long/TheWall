@@ -66,14 +66,19 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         return formattedContent;
     }
     function createMessage(message) {
-        console.log("Creating message: " + message);
+        var _a, _b;
         var div = document.createElement('div');
         var p = document.createElement('p');
         div.id = message._id;
         var content = formatMessage(message.content);
         p.innerHTML = "" + content;
         div.classList.add('message');
-        console.log("Created message: " + div.innerHTML);
+        p.classList.add('new-message');
+        var firstMessage = (_b = (_a = document.getElementById('wall')) === null || _a === void 0 ? void 0 : _a.firstChild) === null || _b === void 0 ? void 0 : _b.firstChild;
+        if (firstMessage) {
+            firstMessage.classList.toggle('new-message');
+            firstMessage.classList.toggle('old-message');
+        }
         div.appendChild(p);
         wall.prepend(div);
     }

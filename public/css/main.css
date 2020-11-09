@@ -27,13 +27,13 @@
   box-sizing: border-box;
   border-width: 2px;
   border-style: solid;
-  border-color: lightgray;
+  border-color: #D3D3D3;
   border-radius: 2px;
   font-family: "Jost", sans-serif;
   font-size: 14px;
   transition: border-color 300ms; }
   #messageContent:focus {
-    border-color: black; }
+    border-color: #FF8C00; }
 
 #postMessage {
   width: 100%;
@@ -44,9 +44,10 @@
   border-radius: 2px;
   font-family: "Poppins", sans-serif;
   font-size: 14px;
+  background-color: #D3D3D3;
   transition: background-color 300ms; }
   #postMessage:hover {
-    background-color: lightblue; }
+    background-color: #ADD8E6; }
 
 #wall {
   width: 100%; }
@@ -55,6 +56,13 @@
     #wall .message p {
       margin: 0;
       padding: 0 .5em;
-      border-left: 2px solid gray;
       font-family: "Jost", sans-serif;
-      font-size: 24px; }
+      font-size: 24px;
+      word-break: break-word;
+      transition: border-left 750ms; }
+
+.new-message {
+  border-left: 2px solid #FF8C00; }
+
+.old-message {
+  border-left: 2px solid #808080; }

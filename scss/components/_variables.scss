@@ -7,13 +7,19 @@ $font-button-size: 14px;
 $font-wall-family: "Jost", sans-serif;
 $font-wall-size: 24px;
 
-$input-border-color: lightgray;
-$input-border-color-focus: black;
+$input-border-color: #D3D3D3;
+$input-border-color-focus: #FF8C00;
 $input-border-transition-speed: 300ms;
 $input-border-radius: 2px;
 $input-padding: .25em;
-$submit-color-hover: lightblue;
+$submit-color: #D3D3D3;
+$submit-color-hover: #ADD8E6;
 $submit-color-transition-speed: 300ms;
+
+$new-message-color: #FF8C00;
+$old-message-color: #808080;
+
+$message-border-transition-speed: 750ms;
 
 $breakpoint-phone: 599px;
 $breakpoint-tablet-portrait: 600px;

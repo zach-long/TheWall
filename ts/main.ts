@@ -43,8 +43,7 @@
         return formattedContent;
     }
 
-    function createMessage(message: MessageObject) {
-        console.log(`Creating message: ${message}`);
+    function createMessage(message: MessageObject) {        
         let div: HTMLDivElement = document.createElement('div');
         let p: HTMLParagraphElement = document.createElement('p');
 
@@ -54,9 +53,14 @@
         p.innerHTML = `${content}`;
 
         div.classList.add('message');
+        p.classList.add('new-message');
         
-        console.log(`Created message: ${div.innerHTML}`);
-
+        let firstMessage: HTMLParagraphElement = document.getElementById('wall')?.firstChild?.firstChild as HTMLParagraphElement;
+        if (firstMessage) {
+            firstMessage.classList.toggle('new-message');
+            firstMessage.classList.toggle('old-message');
+        }
+        
         div.appendChild(p);
         wall.prepend(div);
     }
