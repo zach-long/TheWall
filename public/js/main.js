@@ -40,6 +40,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     var wall = document.getElementById('wall');
     var messageForm = document.forms[0];
     var submitButton = document.getElementById('postMessage');
+    var onFirstLoad = true;
     function asyncReq(url, method, data) {
         return __awaiter(this, void 0, void 0, function () {
             var response;
@@ -73,11 +74,18 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         var content = formatMessage(message.content);
         p.innerHTML = "" + content;
         div.classList.add('message');
-        p.classList.add('new-message');
-        var firstMessage = (_b = (_a = document.getElementById('wall')) === null || _a === void 0 ? void 0 : _a.firstChild) === null || _b === void 0 ? void 0 : _b.firstChild;
-        if (firstMessage) {
-            firstMessage.classList.toggle('new-message');
-            firstMessage.classList.toggle('old-message');
+        if (!onFirstLoad) {
+            p.classList.add('new-message');
+        }
+        else {
+            p.classList.add('old-message');
+        }
+        if (!onFirstLoad) {
+            var firstMessage = (_b = (_a = document.getElementById('wall')) === null || _a === void 0 ? void 0 : _a.firstChild) === null || _b === void 0 ? void 0 : _b.firstChild;
+            if (firstMessage && firstMessage.classList.contains('new-message')) {
+                firstMessage.classList.toggle('new-message');
+                firstMessage.classList.toggle('old-message');
+            }
         }
         div.appendChild(p);
         wall.prepend(div);
@@ -89,6 +97,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
                 console.log(message);
                 createMessage(message);
             });
+            onFirstLoad = false;
         });
     }
     function postMessage() {

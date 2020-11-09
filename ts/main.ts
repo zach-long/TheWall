@@ -21,6 +21,8 @@
     const wall: HTMLElement = document.getElementById('wall')!;
     const messageForm: HTMLFormElement = document.forms[0];
     const submitButton: HTMLInputElement = document.getElementById('postMessage')! as HTMLInputElement;
+
+    var onFirstLoad = true;
     
     async function asyncReq(url: string, method: 'get' | 'post', data?: FormJSON) {
         const response: Response = await fetch(url, {
@@ -53,14 +55,20 @@
         p.innerHTML = `${content}`;
 
         div.classList.add('message');
-        p.classList.add('new-message');
-        
-        let firstMessage: HTMLParagraphElement = document.getElementById('wall')?.firstChild?.firstChild as HTMLParagraphElement;
-        if (firstMessage) {
-            firstMessage.classList.toggle('new-message');
-            firstMessage.classList.toggle('old-message');
+        if (!onFirstLoad) {
+            p.classList.add('new-message');
+        } else {
+            p.classList.add('old-message');
         }
-        
+
+        if (!onFirstLoad) {
+            let firstMessage: HTMLParagraphElement = document.getElementById('wall')?.firstChild?.firstChild as HTMLParagraphElement;
+            if (firstMessage && firstMessage.classList.contains('new-message')) {
+                firstMessage.classList.toggle('new-message');
+                firstMessage.classList.toggle('old-message');
+            }
+        }
+
         div.appendChild(p);
         wall.prepend(div);
     }
@@ -73,6 +81,8 @@
                 console.log(message);
                 createMessage(message);
             });
+            
+            onFirstLoad = false;
         });
     }
 
